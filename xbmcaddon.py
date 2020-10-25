@@ -22,13 +22,15 @@ class Addon:
     :param id: [opt] string - id of the addon as specified inaddon.xml
 
     .. note::
-        Specifying the addon id is not needed.  Important however is that
+        Specifying the addon id is not needed. Important however is that
         the addon folder has the same name as the AddOn id provided
-        inaddon.xml.  You can optionally specify the addon id from another
+        in addon.xml. You can optionally specify the addon id from another
         installed addon to retrieve settings from it.
 
     **id** is optional as it will be auto detected for this add-on
-    instance.Example::
+    instance.
+
+    Example::
 
         ..
         self.Addon = xbmcaddon.Addon()
@@ -47,8 +49,9 @@ class Addon:
         :return: Localized 'unicode string'
 
         **id** is optional as it will be auto detected for this add-on
-        instance.Example::
+        instance.
 
+        Example::
             ..
             locstr = self.Addon.`getLocalizedString`(32000)
             ..
@@ -65,6 +68,7 @@ class Addon:
         **id** is optional as it will be auto detected for this add-on
         instance.Example::
 
+        Example::
             ..
             apikey = self.Addon.`getSetting`('apikey')
             ..
@@ -78,7 +82,9 @@ class Addon:
         :param id: string - id of the setting that the module needs to access.
         :return: Setting as a boolean
 
-          New function added.Example::
+          New function added.
+
+        Example::
 
             ..
             enabled = self.Addon.getSettingBool('enabled')
@@ -93,7 +99,9 @@ class Addon:
         :param id: string - id of the setting that the module needs to access.
         :return: Setting as an integer
 
-          New function added.Example::
+          New function added.
+
+        Example::
 
             ..
             max = self.Addon.getSettingInt('max')
@@ -108,7 +116,9 @@ class Addon:
         :param id: string - id of the setting that the module needs to access.
         :return: Setting as a floating point number
 
-          New function added.Example::
+          New function added.
+
+        Example::
 
             ..
             max = self.Addon.getSettingNumber('max')
@@ -123,7 +133,9 @@ class Addon:
         :param id: string - id of the setting that the module needs to access.
         :return: Setting as a unicode string
 
-          New function added.Example::
+          New function added.
+
+        Example::
 
             ..
             apikey = self.Addon.getSettingString('apikey')
@@ -142,7 +154,9 @@ class Addon:
             You can use the above as keywords for arguments.
 
         **id** is optional as it will be auto detected for this add-on
-        instance.Example::
+        instance.
+
+        Example::
 
             ..
             self.Addon.`setSetting`(id='username', value='teamkodi')
@@ -161,7 +175,9 @@ class Addon:
         .. note::
             You can use the above as keywords for arguments.
 
-          New function added.Example::
+          New function added.
+
+        Example::
 
             ..
             self.Addon.setSettingBool(id='enabled', value=True)
@@ -180,7 +196,9 @@ class Addon:
         .. note::
             You can use the above as keywords for arguments.
 
-          New function added.Example::
+          New function added.
+
+        Example::
 
             ..
             self.Addon.setSettingInt(id='max', value=5)
@@ -199,7 +217,9 @@ class Addon:
         .. note::
             You can use the above as keywords for arguments.
 
-          New function added.Example::
+        New function added.
+
+        Example::
 
             ..
             self.Addon.setSettingNumber(id='max', value=5.5)
@@ -218,7 +238,9 @@ class Addon:
         .. note::
             You can use the above as keywords for arguments.
 
-          New function added.Example::
+          New function added.
+
+        Example::
 
             ..
             self.Addon.setSettingString(id='username', value='teamkodi')
