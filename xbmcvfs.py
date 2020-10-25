@@ -27,7 +27,10 @@ class File:
     w    Open for write 
     ==== ============== 
 
-      Added context manager supportExample::    ..
+      Added context manager support
+
+    Example::
+        ..
         f = xbmcvfs.File(file, 'w')
         ..
     **Example (v19 and up):**
@@ -104,7 +107,7 @@ class File:
         **Example (v19 and up):**
 
             ..
-            whith xbmcvfs.File(file, 'w') as f:
+            with xbmcvfs.File(file, 'w') as f:
               result = f.write(buffer)
             ..
         """
@@ -139,8 +142,10 @@ class File:
         :param seekBytes: position in the file
         :param iWhence: [opt] where in a file to seek from[0 beginning, 1 current , 2 end
             position]
-          Function changed. param **iWhence** is now optional.Example::
 
+        Function changed. param iWhence is now optional.
+
+        Example::
             ..
             f = xbmcvfs.File(file)
             result = f.seek(8129, 0)
@@ -161,7 +166,9 @@ class File:
 
         :return: The file position
 
-          New function addedExample::
+          New function added
+
+        Example::
 
             ..
             f = xbmcvfs.File(file)
@@ -205,8 +212,10 @@ class Stat:
     required on all of the directories in path that lead to the file.
 
     :param path: [string] file or folder
-      New function addedExample::
 
+    New function added
+
+    Example::
         ..
           st = xbmcvfs.Stat(path)
           modified = st.st_mtime()
@@ -438,3 +447,68 @@ def listdir(path: str) -> Tuple[List[str], List[str]]:
         ..
     """
     return [""], [""]
+
+
+def makeLegalFilename(filename: str) -> str:
+    """
+    Returns a legal filename or path as a string.
+
+    :param filename: string or unicode - filename/path to make legal
+    :return: Legal filename or path as a string
+
+    The returned value is platform-specific. This is due to the fact that the
+    chars that need to be replaced to make a path legal depend on the underlying
+    OS filesystem. This is useful, for example, if you want to create a file or
+    folder based on data over which you have no control (e.g. an external API).
+
+    New function added (replaces old xbmc.makeLegalFilename)
+
+    Example::
+
+        # windows
+        >> xbmcvfs.makeLegalFilename('C://Trailers/Ice Age: The Meltdown.avi')
+        C:\Trailers\Ice Age_ The Meltdown.avi
+        # non-windows
+        >> xbmcvfs.makeLegalFilename("///\\jk???lj????.mpg")
+        /jk___lj____.mpg
+    """
+    return ""
+
+
+def translatePath(path: str) -> str:
+    """
+    Returns the translated path.
+
+    :param path: string - Path to format
+    :return: Translated path
+
+    Only useful if you are coding for both Linux and Windows. e.g.
+    converts ``'special://masterprofile/script_data'`` ->
+    ``'/home/user/XBMC/UserData/script_data'`` on Linux.
+
+    New function added (replaces old xbmc.translatePath)
+
+    Example::
+
+        fpath = xbmcvfs.translatePath('special://home')
+    """
+    return ""
+
+
+def validatePath(path: str) -> str:
+    """
+    Returns the validated path.
+
+    :param path: string - Path to format
+    :return: Validated path
+
+    Only useful if you are coding for both Linux and Windows for fixing slash
+    problems. e.g. Corrects ``'Z://something'`` -> ``'Z:'``
+
+    New function added (replaces old xbmc.validatePath)
+
+    Example::
+
+        fpath = xbmcvfs.validatePath(somepath)
+    """
+    return ""
