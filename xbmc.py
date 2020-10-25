@@ -568,7 +568,7 @@ class InfoTagVideo:
     
     def getDirector(self) -> str:
         """
-        Getfilm director who has made the film (if present).
+        Get film director who has made the film (if present).
 
         :return: [string] Film director name.
         """
@@ -802,7 +802,7 @@ class InfoTagVideo:
         """
         To get the artist name (for musicvideos)
 
-        :return: [std::vector<std::string>] Artist name
+        :return: List[str] Artist name
 
           New function added.
         """
@@ -858,7 +858,7 @@ class Keyboard:
         kb.setHeading('Enter password') # optional
         kb.setHiddenInput(True) # optional
         kb.doModal()
-        if (kb.isConfirmed()):
+        if kb.isConfirmed():
           text = kb.getText()
         ..
     """
@@ -1088,6 +1088,14 @@ class Monitor:
         :return: True when abort have been requested, False if a timeout is given and the operation times out.
 
           New function added.
+
+        Example::
+            monitor = xbmc.Monitor()
+            # do something
+            monitor.waitForAbort(10) # sleeps for 10 secs or returns early if kodi aborts
+            if monitor.abortRequested():
+                # abort was requested to Kodi (e.g. shutdown), do your cleanup logic
+                ..
         """
         return True
     
@@ -1127,8 +1135,7 @@ class Player:
 
         :param item: [opt] string - filename, url or playlist
         :param listitem: [opt] listitem - used with setInfo() to set different infolabels.
-        :param windowed: [opt] bool - true=play video windowed, false=play users
-            preference.(default)
+        :param windowed: [opt] bool - true=play video windowed, false=play users preference.(default)
         :param startpos: [opt] int - starting position when playing a playlist. Default = -1
 
         .. note::
@@ -1264,7 +1271,7 @@ class Player:
         """
         Set subtitle file and enable subtitles.
 
-        :param subtitleFile: File to use as source ofsubtitles
+        :param subtitleFile: File to use as source of subtitles
         """
         pass
     
@@ -1319,7 +1326,9 @@ class Player:
         :param item: ListItem with new info
         :raises Exception: If player is not playing a file
 
-        New function added.Example::
+        New function added.
+
+        Example::
 
             ...
             item = xbmcgui.ListItem()
@@ -1437,7 +1446,9 @@ class Player:
         """
         onAVStarted method.
 
-        Will be called when Kodi has a video or audiostream.  New function added.
+        Will be called when Kodi has a video or audiostream.
+
+        New function added.
         """
         pass
     
@@ -1445,8 +1456,10 @@ class Player:
         """
         onAVChange method.
 
-        Will be called when Kodi has a video, audio or subtitle stream. Also happens
-        when the stream changes.  New function added.
+        Will be called when Kodi has a video, audio or subtitle stream.
+        Also happens when the stream changes.
+
+        New function added.
         """
         pass
     
@@ -1717,7 +1730,8 @@ class RenderCapture:
 
         :param width: Width capture image should be rendered to
         :param height: Height capture image should should be rendered to
-          Removed the option to pass **flags**
+
+        Removed the option to pass **flags**
         """
         pass
     
@@ -1736,24 +1750,32 @@ def log(msg: str, level: int = LOGDEBUG) -> None:
     =============== ================================================================================================================================================= 
     xbmc.LOGDEBUG   In depth information about the status of Kodi. This information can pretty much only be deciphered by a developer or long time Kodi power user.   
     xbmc.LOGINFO    Something has happened. It's not a problem, we just thought you might want to know. Fairly excessive output that most people won't care about.    
-    xbmc.LOGNOTICE  Similar to INFO but the average Joe might want to know about these events. This level and above are logged by default.                            
     xbmc.LOGWARNING Something potentially bad has happened. If Kodi did something you didn't expect, this is probably why. Watch for errors to follow.                
     xbmc.LOGERROR   This event is bad. Something has failed. You likely noticed problems with the application be it skin artifacts, failure of playback a crash, etc. 
     xbmc.LOGFATAL   We're screwed. Kodi is about to crash.                                                                                                            
     =============== ================================================================================================================================================= 
 
     .. note::
-        You can use the above as keywords for arguments and skip certain
-        optional arguments. Once you use a keyword, all following
-        arguments require the keyword.
+        Addon developers are advised to keep LOGDEBUG as the default logging level
+        and to use conservative logging (log only if needed). Excessive logging makes
+        it harder to debug kodi itself.
 
-    Text is written to the log for the following conditions.loglevel == -1 (NONE, nothing at all is logged)
+    Logging in kodi has a global configuration level that controls how text is
+    written to the log. This global logging behaviour can be changed in the
+    GUI (**Settings -> System -> Logging**) (debug toggle) or furthered configured
+    in advancedsettings (loglevel setting).
 
-    loglevel == 0 (NORMAL, shows LOGNOTICE, LOGERROR, LOGSEVERE and LOGFATAL)
+    Text is written to the log for the following conditions:
 
-    loglevel == 1 (DEBUG, shows all) See pydocs for valid values for level.
+        - loglevel == -1 (NONE, nothing at all is logged to the log)
 
-      Default level changed from LOGNOTICE to LOGDEBUG
+        - loglevel == 0 (NORMAL, shows LOGINFO, LOGWARNING, LOGERROR and LOGFATAL) - Default kodi behaviour
+
+        - loglevel == 1 (DEBUG, shows all) - Behaviour if you toggle debug log in the GUI
+
+    Default level changed from LOGNOTICE to LOGDEBUG
+
+    Removed LOGNOTICE (use LOGINFO) and LOGSEVERE (use LOGFATAL)
 
     Example::
 
@@ -1811,7 +1833,9 @@ def executebuiltin(function: str, wait: bool = False) -> None:
 
     :param function: string - builtin function to execute.
 
-    List of functions -http://kodi.wiki/view/List_of_Built_In_FunctionsExample::
+    List of functions -https://codedocs.xyz/xbmc/xbmc/page__list_of_built_in_functions.html
+
+    Example::
 
         ..
         xbmc.executebuiltin('Skin.SetString(abc,def)')
@@ -1827,7 +1851,9 @@ def executeJSONRPC(jsonrpccommand: str) -> str:
     :param jsonrpccommand: string - jsonrpc command to execute.
     :return: jsonrpc return string
 
-    List of commands -Example::
+    List of commands -https://codedocs.xyz/xbmc/xbmc/namespace_j_s_o_n_r_p_c.html
+
+    Example::
 
         ..
         response = xbmc.executeJSONRPC('{ "jsonrpc": "2.0", "method": "JSONRPC.Introspect", "id": 1 }')
@@ -1844,8 +1870,13 @@ def sleep(timemillis: int) -> None:
     :raises PyExc_TypeError: If time is not an integer.
 
     .. note::
-        This is useful if you have for example a Player class that is
-        waiting for onPlayBackEnded() calls.
+        This is useful if you need to sleep for a small amount of time (milisecond range)
+        somewhere in your addon logic. Please note that Kodi will attempt to stop any running
+        scripts when signaled to exit and wait for a maximum of 5 seconds before trying to
+        force stop your script. If your addon makes use of xbmc.sleep() incorrectly
+        (long periods of time, e.g. that exceed the force stop waiting time) it may lead
+        to Kodi hanging on shutdown. In case your addon needs long sleep/idle periods use
+        xbmc.Monitor().waitForAbort(secs) instead.
 
     Example::
 
@@ -1913,7 +1944,9 @@ def getLanguage(format: int = ENGLISH_NAME, region: bool = False) -> str:
         the returned language string
     :return: The active language as a string
 
-      Added new options **format** and **region**.Example::
+      Added new options **format** and **region**.
+
+    Example::
 
         ..
         language = xbmc.getLanguage(xbmc.ENGLISH_NAME)
@@ -1983,7 +2016,9 @@ def getInfoLabel(cLine: str) -> str:
     :param infotag: string - infoTag for value you want returned.
     :return: InfoLabel as a string
 
-    List of InfoTags -http://kodi.wiki/view/InfoLabelsExample::
+    List of InfoTags -https://codedocs.xyz/xbmc/xbmc/modules__infolabels_boolean_conditions.html
+
+    Example::
 
         ..
         label = xbmc.getInfoLabel('Weather.Conditions')
@@ -1999,7 +2034,9 @@ def getInfoImage(infotag: str) -> str:
     :param infotag: string - infotag for value you want returned
     :return: Filename including path to the InfoImage's thumbnail as a string
 
-    List of InfoTags -http://kodi.wiki/view/InfoLabelsExample::
+    List of InfoTags -http://kodi.wiki/view/InfoLabels
+
+    Example::
 
         ..
         filename = xbmc.getInfoImage('Weather.Conditions')
@@ -2015,7 +2052,9 @@ def playSFX(filename: str, useCached: bool = True) -> None:
     :param filename: string - filename of the wav file to play
     :param useCached: [opt] bool - False = Dump any previously cached wav associated with
         filename
-      Added new option **useCached**.Example::
+      Added new option **useCached**.
+
+    Example::
 
         ..
         xbmc.playSFX('special://xbmc/scripts/dingdong.wav')
@@ -2062,7 +2101,7 @@ def getCondVisibility(condition: str) -> bool:
     :param condition: string - condition to check
     :return: True (1) or False (0) as a bool
 
-    List of Conditions -http://kodi.wiki/view/List_of_Boolean_Conditions
+    List of Conditions -https://codedocs.xyz/xbmc/xbmc/modules__infolabels_boolean_conditions.html
 
     .. note::
         You can combine two (or more) of the above settings by
@@ -2104,27 +2143,6 @@ def getCacheThumbName(path: str) -> str:
 
         ..
         thumb = xbmc.getCacheThumbName('f:\\videos\\movie.avi')
-        ..
-    """
-    return ""
-
-
-def translatePath(path: str) -> str:
-    """
-    Returns the translated path.
-
-    :param path: string or unicode - Path to format
-    :return: Translated path
-
-    .. note::
-        Only useful if you are coding for both Linux and Windows. e.g.
-        Converts 'special://masterprofile/script_data' ->
-        '/home/user/XBMC/UserData/script_data' on Linux.
-
-    Example::
-
-        ..
-        fpath = xbmc.translatePath('special://masterprofile/script_data')
         ..
     """
     return ""
@@ -2304,7 +2322,9 @@ def convertLanguage(language: str, format: int) -> str:
 
     :return: Converted Language string
 
-      New function added.Example::
+      New function added.
+
+    Example::
 
         ..
         language = xbmc.convertLanguage(English, xbmc.ISO_639_2)
