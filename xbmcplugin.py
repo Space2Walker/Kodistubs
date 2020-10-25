@@ -161,6 +161,7 @@ def setResolvedUrl(handle: int,
 
 def addSortMethod(handle: int,
                   sortMethod: int,
+                  labelMask: str = "",
                   label2Mask: str = "") -> None:
     """
     Adds a sorting method for the media list.
@@ -217,6 +218,17 @@ def addSortMethod(handle: int,
     xbmcplugin.SORT_METHOD_SONG_USER_RATING                             Sort by the rating of the user of song                  
     =================================================================== ======================================================= 
 
+    :param labelMask: [opt] string - the label mask to use for the first label.
+        applies to:
+    ============================ =====================
+    sortMethod	                labelMask
+    ============================ =====================
+    SORT_METHOD_TRACKNUM	     Defaults to [%N. ]%T
+    SORT_METHOD_EPISODE	         Defaults to %H. %T
+    SORT_METHOD_PRODUCTIONCODE	 Defaults to %H. %T
+    All other sort methods	     Defaults to %T
+    ============================ =====================
+
     :param label2Mask: [opt] string - the label mask to use for the second label. Defaults
         to``%D``  applies to:
 
@@ -233,11 +245,16 @@ def addSortMethod(handle: int,
     .. note::
         to add multiple sort methods just call the method multiple times.
 
-      Added new sort **SORT_METHOD_DATE_TAKEN**, **SORT_METHOD_COUNTRY**, **S
-    ORT_METHOD_DATEADDED**, **SORT_METHOD_FULLPATH**, **SORT_METHOD_LABEL_IG
-    NORE_FOLDERS**, **SORT_METHOD_LASTPLAYED**, **SORT_METHOD_PLAYCOUNT**, **
-    SORT_METHOD_CHANNEL**.  Added new
-    sort **SORT_METHOD_VIDEO_USER_RATING**.Example::
+    Added new sort **SORT_METHOD_DATE_TAKEN**, **SORT_METHOD_COUNTRY**,
+    **SORT_METHOD_DATEADDED**, **SORT_METHOD_FULLPATH**,
+    **SORT_METHOD_LABEL_IGNORE_FOLDERS**, **SORT_METHOD_LASTPLAYED**,
+    **SORT_METHOD_PLAYCOUNT**, **SORT_METHOD_CHANNEL**.
+
+    Added new sort **SORT_METHOD_VIDEO_USER_RATING**.
+
+    Added new option labelMask.
+
+    Example::
 
         ..
         xbmcplugin.addSortMethod(int(sys.argv[1]), xbmcplugin.SORTMETHOD_DATEADDED)
@@ -303,7 +320,9 @@ def setContent(handle: int, content: str) -> None:
     Use **videos** for all videos which do not apply to the more specific mentioned
     ones like "movies", "episodes" etc. A good example is youtube.
 
-      Added new **games** contentExample::
+    Added new **games** content
+
+    Example::
 
         ..
         xbmcplugin.setContent(int(sys.argv[1]), 'movies')
