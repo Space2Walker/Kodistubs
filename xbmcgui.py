@@ -1329,7 +1329,7 @@ class ControlFadeLabel(Control):
         """
         pass
     
-    def reset(self): -> None
+    def reset(self) -> None:
         """
         Clear this fade label
 
